@@ -40,7 +40,11 @@ public class Main2Activity extends AppCompatActivity {
         });
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        System.out.println(">>>> Main2 destroy");
+    }
 
     @Override
     protected void onResume() {
