@@ -1,12 +1,9 @@
 package com.example.shyhjie.myapplication;
 
-import android.app.usage.UsageEvents;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import com.trello.rxlifecycle.RxLifecycle;
 import com.trello.rxlifecycle.android.ActivityEvent;
@@ -15,7 +12,6 @@ import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
-import rx.functions.Action1;
 
 public class Main2Activity extends RxAppCompatActivity {
 
