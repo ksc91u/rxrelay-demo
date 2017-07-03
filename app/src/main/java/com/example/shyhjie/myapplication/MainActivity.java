@@ -22,7 +22,10 @@ public class MainActivity extends AppCompatActivity {
     Observable.timer(10, TimeUnit.SECONDS).subscribe(aLong -> {
       System.out.println(">>> send 100");
       EventBus.intBus.send(100);
+      startActivity(new Intent(MainActivity.this, Main2Activity.class));
     });
+
+
   }
 
   public void forceCrash(View view) {
