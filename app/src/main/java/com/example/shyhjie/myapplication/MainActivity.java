@@ -19,11 +19,9 @@ public class MainActivity extends AppCompatActivity {
 
     startActivity(new Intent(MainActivity.this, Main2Activity.class));
 
-    Observable.timer(10, TimeUnit.SECONDS).subscribe(new Action1<Long>() {
-      @Override
-      public void call(Long aLong) {
-        EventBus.intBus.send(100);
-      }
+    Observable.timer(10, TimeUnit.SECONDS).subscribe(aLong -> {
+      System.out.println(">>> send 100");
+      EventBus.intBus.send(100);
     });
   }
 

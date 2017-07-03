@@ -8,12 +8,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.trello.rxlifecycle.RxLifecycle;
+import com.trello.rxlifecycle.android.ActivityEvent;
+import com.trello.rxlifecycle.android.FragmentEvent;
+import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
 import rx.functions.Action1;
 
-public class Main2Activity extends AppCompatActivity {
+public class Main2Activity extends RxAppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,21 +28,13 @@ public class Main2Activity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show());
         System.out.println(">>>> Main2 onCreate");
 
-        EventBus.intBus.toObserverable().subscribe(new Action1<Integer>() {
-            @Override
-            public void call(Integer integer) {
-                System.out.println(">>>> Main2 receive " + integer + " from bus");
-            }
-        });
+        EventBus.intBus.toObserverable()
+                .compose(RxLifecycle.bindUntilEvent(lifecycle(), ActivityEvent.DESTROY))
+                .subscribe(integer -> System.out.println(">>>> Main2 receive " + integer + " from bus"));
     }
 
     @Override
@@ -50,12 +47,7 @@ public class Main2Activity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         System.out.println(">>>> Main2 onResume");
-        Observable.timer(1, TimeUnit.SECONDS).subscribe(new Action1<Long>() {
-            @Override
-            public void call(Long aLong) {
-                finish();
-            }
-        });
+        Observable.timer(1, TimeUnit.SECONDS).subscribe(aLong -> finish());
     }
 
     @Override

@@ -26,3 +26,4 @@
 
 -keep class com.crashlytics.** { *; }
 -keepattributes *Annotation*,SourceFile,LineNumberTable
+-dontwarn java.lang.invoke.*
